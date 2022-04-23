@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/cdefs.h>
+#define LOG_LOCAL_LEVEL ESP_LOG_VERBOSE
 #include "esp_log.h"
 #include "esp_attr.h"
 #include "led_strip.h"
@@ -166,6 +167,8 @@ led_strip_t *led_strip_new_rmt_ws2812(const led_strip_config_t *config)
     ws2812->parent.refresh = ws2812_refresh;
     ws2812->parent.clear = ws2812_clear;
     ws2812->parent.del = ws2812_del;
+
+    ESP_LOGD(TAG, "led_strip_init done");
 
     return &ws2812->parent;
 err:

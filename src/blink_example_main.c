@@ -10,6 +10,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "driver/gpio.h"
+#define LOG_LOCAL_LEVEL ESP_LOG_VERBOSE
 #include "esp_log.h"
 #include "led_strip.h"
 #include "sdkconfig.h"
@@ -38,6 +39,7 @@ static void blink_led(void)
         /* Set all LED off to clear all pixels */
         pStrip_a->clear(pStrip_a, 50);
     }
+    ESP_LOGD(TAG, "LED set to %s!", s_led_state == true ? "high" : "low");
 }
 
 static void configure_led(void)
@@ -55,6 +57,7 @@ static void blink_led(void)
 {
     /* Set the GPIO level according to the state (LOW or HIGH)*/
     gpio_set_level(BLINK_GPIO, s_led_state);
+    ESP_LOGD(TAG, "GPIO set to %s!", s_led_state == true ? "high" : "low");
 }
 
 static void configure_led(void)
@@ -72,6 +75,7 @@ void app_main(void)
 
     /* Configure the peripheral according to the LED type */
     configure_led();
+    ESP_LOGD(TAG, "Led configured");
 
     while (1) {
         ESP_LOGI(TAG, "Turning the LED %s!", s_led_state == true ? "ON" : "OFF");
